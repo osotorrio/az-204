@@ -4,23 +4,23 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.ServiceBus;
 
-namespace QueueMessageReceiver
+namespace TopicMessageReceiver
 {
     class Program
     {
-
         const string ServiceBusConnectionString = "Endpoint=sb://servicebus-learn-paths-salesteamapp.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=zBq34zUmK9m/jW/n8Zf18c2wOrzGghiQLpZmKpwH+no=";
-        const string QueueName = "salesteamapp";
-        static IQueueClient queueClient;
+        const string TopicName = "salesperformancemessages";
+        const string SubscriptionName = "subs-europe-africa";
+        static ISubscriptionClient subscriptionClient;
 
         static void Main(string[] args)
         {
-            ReceiveSalesMessageAsync().GetAwaiter().GetResult();
+            MainAsync().GetAwaiter().GetResult();
         }
 
-        static async Task ReceiveSalesMessageAsync()
+        static async Task MainAsync()
         {
-            queueClient = new QueueClient(ServiceBusConnectionString, QueueName);
+            subscriptionClient = new SubscriptionClient(ServiceBusConnectionString, TopicName, SubscriptionName);
 
             Console.WriteLine("======================================================");
             Console.WriteLine("Press ENTER key to exit after receiving all the messages.");
@@ -30,7 +30,7 @@ namespace QueueMessageReceiver
 
             Console.Read();
 
-            await queueClient.CloseAsync();
+            await subscriptionClient.CloseAsync();
         }
 
         static void RegisterMessageHandler()
@@ -39,15 +39,14 @@ namespace QueueMessageReceiver
             {
                 MaxConcurrentCalls = 1,
                 AutoComplete = false
-
             };
-            queueClient.RegisterMessageHandler(ProcessMessagesAsync, messageHandlerOptions);
+            subscriptionClient.RegisterMessageHandler(ProcessMessagesAsync, messageHandlerOptions);
         }
 
         static async Task ProcessMessagesAsync(Message message, CancellationToken token)
         {
-            Console.WriteLine($"{message.SystemProperties.SequenceNumber} - {Encoding.UTF8.GetString(message.Body)}");
-            await queueClient.CompleteAsync(message.SystemProperties.LockToken);
+            Console.WriteLine($"Received sale performance message: SequenceNumber:{message.SystemProperties.SequenceNumber} Body:{Encoding.UTF8.GetString(message.Body)}");
+            await subscriptionClient.CompleteAsync(message.SystemProperties.LockToken);
         }
 
         static Task ExceptionReceivedHandler(ExceptionReceivedEventArgs exceptionReceivedEventArgs)
