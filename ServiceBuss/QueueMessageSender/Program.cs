@@ -4,7 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.ServiceBus;
 
-namespace MessageSender
+namespace QueueMessageSender
 {
     class Program
     {
