@@ -19,7 +19,8 @@ namespace MessageSender
                     Console.WriteLine("Type the message to be sent:");
                     text = Console.ReadLine();
                     await Execute(text);
-                    Console.WriteLine("Message sent successfully");
+                    Console.WriteLine("Operation successful!!");
+                    Console.WriteLine();
                 }
                 while (text.ToLower() != "exit");
             }
