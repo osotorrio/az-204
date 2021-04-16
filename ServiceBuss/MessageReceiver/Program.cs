@@ -15,14 +15,11 @@ namespace MessageReceiver
 
         static void Main(string[] args)
         {
-
             ReceiveSalesMessageAsync().GetAwaiter().GetResult();
-
         }
 
         static async Task ReceiveSalesMessageAsync()
         {
-
             queueClient = new QueueClient(ServiceBusConnectionString, QueueName);
 
             Console.WriteLine("======================================================");
@@ -34,7 +31,6 @@ namespace MessageReceiver
             Console.Read();
 
             await queueClient.CloseAsync();
-
         }
 
         static void RegisterMessageHandler()
@@ -43,6 +39,7 @@ namespace MessageReceiver
             {
                 MaxConcurrentCalls = 1,
                 AutoComplete = false
+
             };
             queueClient.RegisterMessageHandler(ProcessMessagesAsync, messageHandlerOptions);
         }

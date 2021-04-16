@@ -8,40 +8,35 @@ namespace MessageSender
 {
     class Program
     {
-        static async Task Main(string[] args)
-        {
-            try
-            {
-                string text;
+        const string ServiceBusConnectionString = "Endpoint=sb://servicebus-learn-paths-salesteamapp.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=zBq34zUmK9m/jW/n8Zf18c2wOrzGghiQLpZmKpwH+no=";
+        const string QueueName = "salesteamapp";
+        static IQueueClient queueClient;
 
-                do
-                {
-                    Console.WriteLine("Type the message to be sent:");
-                    text = Console.ReadLine();
-                    await Execute(text);
-                    Console.WriteLine("Operation successful!!");
-                    Console.WriteLine();
-                }
-                while (text.ToLower() != "exit");
-            }
-            catch (System.Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                Console.WriteLine(ex.StackTrace);
-            }
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Sending a message to the Sales Messages queue...");
+            SendSalesMessageAsync().GetAwaiter().GetResult();
+            Console.WriteLine("Message was sent successfully.");
         }
 
-        static async Task Execute(string text)
+        static async Task SendSalesMessageAsync()
         {
-            var message = $"Message: {text}. Date: {DateTime.UtcNow}";
+            queueClient = new QueueClient(ServiceBusConnectionString, QueueName);
 
-            var connectionString = "Endpoint=sb://servicebus-learn-paths-salesteamapp.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=zBq34zUmK9m/jW/n8Zf18c2wOrzGghiQLpZmKpwH+no=";
+            try
+            {
+                string messageBody = $"$10,000 order for bicycle parts from retailer Adventure Works.";
+                var message = new Message(Encoding.UTF8.GetBytes(messageBody));
 
-            var qClient = new QueueClient(connectionString, "salesteamapp");
+                Console.WriteLine($"Sending message: {messageBody}");
+                await queueClient.SendAsync(message);
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine($"{DateTime.Now} :: Exception: {exception.Message}");
+            }
 
-            var encodedMessage = new Message(Encoding.UTF8.GetBytes(message));
-
-            await qClient.SendAsync(encodedMessage);
+            await queueClient.CloseAsync();
         }
     }
 }
