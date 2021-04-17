@@ -1,7 +1,3 @@
 az storage account show-connection-string 
     --name oscarlearning2021 
     --resource-group learn-a0e633bf-050a-4799-aa30-5a99a950dc62
-
-{
-  "connectionString": "DefaultEndpointsProtocol=https;EndpointSuffix=core.windows.net;AccountName=oscarlearning2021;AccountKey=Lw+cAi71GYQS6TzHhPN6fWN6d8a3pPSGWQ57GukZ2KRZc+OcIFq81EPoBPOmSuuUk8bf/ekjcMYNgxF4PwVoaQ=="
-}

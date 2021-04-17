@@ -1,0 +1,1 @@
+az storage message peek --queue-name testqueue --connection-string "DefaultEndpointsProtocol=https;EndpointSuffix=core.windows.net;AccountName=oscarlearning2021;AccountKey=Lw+cAi71GYQS6TzHhPN6fWN6d8a3pPSGWQ57GukZ2KRZc+OcIFq81EPoBPOmSuuUk8bf/ekjcMYNgxF4PwVoaQ=="
