@@ -1,0 +1,6 @@
+az storage account create 
+    --name oscarlearning2021 
+    -g learn-a0e633bf-050a-4799-aa30-5a99a950dc62 
+    --kind StorageV2 
+    --sku Standard_LRS 
+    -l westeurope
