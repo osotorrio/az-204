@@ -22,14 +22,14 @@ namespace QueueMessageReceiver
         {
             QueueClient queueClient = new QueueClient(StorageAccountConnectionString, QueueName);
 
-            //QueueMessage[] retrievedMessage = await queueClient.ReceiveMessagesAsync();
-            //Console.WriteLine($"Retrieved message with content '{retrievedMessage[0].MessageText}'");
+            QueueMessage[] retrievedMessage = await queueClient.ReceiveMessagesAsync();
+            Console.WriteLine($"Retrieved message with content '{retrievedMessage[0].MessageText}'");
 
-            //await queueClient.DeleteMessageAsync(retrievedMessage[0].MessageId, retrievedMessage[0].PopReceipt);
-            //Console.WriteLine($"Deleted message: '{retrievedMessage[0].MessageText}'");
+            await queueClient.DeleteMessageAsync(retrievedMessage[0].MessageId, retrievedMessage[0].PopReceipt);
+            Console.WriteLine($"Deleted message: '{retrievedMessage[0].MessageText}'");
 
             await queueClient.DeleteAsync();
-            //Console.WriteLine($"Deleted queue: '{queueClient.Name}'");
+            Console.WriteLine($"Deleted queue: '{queueClient.Name}'");
         }
     }
 }
