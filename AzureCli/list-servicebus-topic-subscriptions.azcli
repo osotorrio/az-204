@@ -1,6 +1,0 @@
-az servicebus topic subscription show
-    --resource-group test-learning-stuff
-    --namespace-name servicebus-learn-paths-salesteamapp
-    --topic-name salesperformancemessages
-    --name EuropeAndAfrica
-    --query subs-europe-africa

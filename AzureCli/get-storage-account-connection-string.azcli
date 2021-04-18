@@ -1,3 +1,0 @@
-az storage account show-connection-string 
-    --name oscarlearning2021 
-    --resource-group learn-a0e633bf-050a-4799-aa30-5a99a950dc62

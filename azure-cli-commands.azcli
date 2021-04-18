@@ -1,0 +1,69 @@
+### CLI
+
+# Set CLI Defaults
+az configure --defaults group=learn-682491ea-0eec-4c67-993c-833f6c429466 location=westus2
+
+#-------------------------------------------------------------------------------------------------------------------------
+
+### STORAGE ACCOUNT
+
+# Create Storage Account
+az storage account create 
+    --name oscarlearning2021 
+    -g learn-a0e633bf-050a-4799-aa30-5a99a950dc62 
+    --kind StorageV2 
+    --sku Standard_LRS 
+    -l westeurope
+
+# Get Storage Account connection string
+az storage account show-connection-string 
+    --name oscarlearning2021 
+    --resource-group learn-a0e633bf-050a-4799-aa30-5a99a950dc62
+
+#-------------------------------------------------------------------------------------------------------------------------
+
+### SERVICE BUS
+
+# Get Service Bus connection string
+az servicebus namespace authorization-rule keys list 
+    --resource-group test-learning-stuff 
+    --name RootManageSharedAccessKey 
+    --query primaryConnectionString 
+    --output tsv 
+    --namespace-name servicebus-learn-paths-salesteamapp
+
+# List Service Bus Queue Messages
+az servicebus queue show
+    --resource-group test-learning-stuff
+    --name salesteamapp
+    --query messageCount
+    --namespace-name servicebus-learn-paths-salesteamapp
+
+# List Service Bus topic subscriptions
+az servicebus topic subscription show
+    --resource-group test-learning-stuff
+    --namespace-name servicebus-learn-paths-salesteamapp
+    --topic-name salesperformancemessages
+    --name EuropeAndAfrica
+    --query subs-europe-africa
+
+#-------------------------------------------------------------------------------------------------------------------------
+
+### QUEUE STORAGE
+
+# Peek messsage from Queue Storage
+az storage message peek 
+    --queue-name testqueue 
+    --connection-string "DefaultEndpointsProtocol=https;EndpointSuffix=core.windows.net;AccountName=oscarlearning2021;AccountKey=SomeCrazykeyValueHere"
+
+#-------------------------------------------------------------------------------------------------------------------------
+
+### EVENT HUBS
+
+# Create Event Hubs namespace
+az eventhubs namespace create --name testingEventHub2021
+
+# Get Event Hubs connection string
+az eventhubs namespace authorization-rule keys list 
+    --name RootManageSharedAccessKey 
+    --namespace-name testingEventHub2021
