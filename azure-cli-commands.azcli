@@ -20,6 +20,14 @@ az storage account show-connection-string
     --name oscarlearning2021 
     --resource-group learn-a0e633bf-050a-4799-aa30-5a99a950dc62
 
+# List Storage Account access keys
+az storage account keys list --account-name storageaccountname2022
+
+# Create a container in Storage Account
+az storage container create 
+    --name messages 
+    --connection-string "<connection string here>"
+    
 #------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ### SERVICE BUS
@@ -69,7 +77,9 @@ az eventhubs namespace authorization-rule keys list
     --namespace-name eventhubsnamespace2021
 
 # Create an Event Hub
-az eventhubs eventhub create --name eventhubname2021 --namespace-name eventhubsnamespace2021
+az eventhubs eventhub create 
+    --name eventhubname2021 
+    --namespace-name eventhubsnamespace2021
 
 # Get Event Hub detailss
 az eventhubs eventhub show 
