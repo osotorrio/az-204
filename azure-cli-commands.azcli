@@ -3,7 +3,7 @@
 # Set CLI Defaults
 az configure --defaults group=learn-682491ea-0eec-4c67-993c-833f6c429466 location=westus2
 
-#-------------------------------------------------------------------------------------------------------------------------
+#------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ### STORAGE ACCOUNT
 
@@ -20,7 +20,7 @@ az storage account show-connection-string
     --name oscarlearning2021 
     --resource-group learn-a0e633bf-050a-4799-aa30-5a99a950dc62
 
-#-------------------------------------------------------------------------------------------------------------------------
+#------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ### SERVICE BUS
 
@@ -47,7 +47,7 @@ az servicebus topic subscription show
     --name EuropeAndAfrica
     --query subs-europe-africa
 
-#-------------------------------------------------------------------------------------------------------------------------
+#------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ### QUEUE STORAGE
 
@@ -56,7 +56,7 @@ az storage message peek
     --queue-name testqueue 
     --connection-string "DefaultEndpointsProtocol=https;EndpointSuffix=core.windows.net;AccountName=oscarlearning2021;AccountKey=SomeCrazykeyValueHere"
 
-#-------------------------------------------------------------------------------------------------------------------------
+#------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ### EVENT HUBS
 
@@ -66,4 +66,14 @@ az eventhubs namespace create --name testingEventHub2021
 # Get Event Hubs connection string
 az eventhubs namespace authorization-rule keys list 
     --name RootManageSharedAccessKey 
-    --namespace-name testingEventHub2021
+    --namespace-name eventhubsnamespace2021
+
+# Create an Event Hub
+az eventhubs eventhub create --name eventhubname2021 --namespace-name eventhubsnamespace2021
+
+# Get Event Hub detailss
+az eventhubs eventhub show 
+    --namespace-name eventhubsnamespace2021 
+    --name eventhubname2021
+
+#------------------------------------------------------------------------------------------------------------------------------------------------------
