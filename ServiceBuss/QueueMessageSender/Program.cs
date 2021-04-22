@@ -3,13 +3,14 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.ServiceBus;
+using Newtonsoft.Json;
 
 namespace QueueMessageSender
 {
     class Program
     {
-        const string ServiceBusConnectionString = "Endpoint=sb://servicebus-learn-paths-salesteamapp.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=zBq34zUmK9m/jW/n8Zf18c2wOrzGghiQLpZmKpwH+no=";
-        const string QueueName = "salesteamapp";
+        const string ServiceBusConnectionString = "Endpoint=sb://servicebus-namespace-2021.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=LppqONsxkRDn/MnJGUrTEV6Ijz3yGkUIZh1ykqCI9MQ=";
+        const string QueueName = "queue-name";
         static IQueueClient queueClient;
 
         static void Main(string[] args)
@@ -23,12 +24,25 @@ namespace QueueMessageSender
         {
             queueClient = new QueueClient(ServiceBusConnectionString, QueueName);
 
+            var user = new User
+            {
+                Id = Guid.NewGuid(),
+                Name = "Peopiot Gritols",
+                Age = 43
+            };
+
+            var userStr = JsonConvert.SerializeObject(user);
+
             try
             {
-                string messageBody = $"$10,000 order for bicycle parts from retailer Adventure Works.";
-                var message = new Message(Encoding.UTF8.GetBytes(messageBody));
+                var message = new Message(Encoding.UTF8.GetBytes(userStr));
 
-                Console.WriteLine($"Sending message: {messageBody}");
+                message.CorrelationId = Guid.NewGuid().ToString();
+                message.UserProperties.Add("Id", user.Id);
+                message.UserProperties.Add("Name", user.Name);
+                message.UserProperties.Add("Age", user.Age);
+
+                Console.WriteLine($"Sending message: {userStr}");
                 await queueClient.SendAsync(message);
             }
             catch (Exception exception)
@@ -38,5 +52,14 @@ namespace QueueMessageSender
 
             await queueClient.CloseAsync();
         }
+    }
+
+    class User
+    {
+        public Guid Id { get; set; }
+
+        public string Name { get; set; }
+
+        public int Age { get; set; }
     }
 }

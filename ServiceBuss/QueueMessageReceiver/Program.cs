@@ -3,14 +3,15 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.ServiceBus;
+using Newtonsoft.Json;
 
 namespace QueueMessageReceiver
 {
     class Program
     {
 
-        const string ServiceBusConnectionString = "Endpoint=sb://servicebus-learn-paths-salesteamapp.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=zBq34zUmK9m/jW/n8Zf18c2wOrzGghiQLpZmKpwH+no=";
-        const string QueueName = "salesteamapp";
+        const string ServiceBusConnectionString = "Endpoint=sb://servicebus-namespace-2021.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=LppqONsxkRDn/MnJGUrTEV6Ijz3yGkUIZh1ykqCI9MQ=";
+        const string QueueName = "queue-name";
         static IQueueClient queueClient;
 
         static void Main(string[] args)
@@ -46,7 +47,20 @@ namespace QueueMessageReceiver
 
         static async Task ProcessMessagesAsync(Message message, CancellationToken token)
         {
-            Console.WriteLine($"{message.SystemProperties.SequenceNumber} - {Encoding.UTF8.GetString(message.Body)}");
+            var userStr = Encoding.UTF8.GetString(message.Body);
+            var user = JsonConvert.DeserializeObject<User>(userStr);
+
+            Console.WriteLine(userStr);
+            Console.WriteLine($"Id: {user.Id}");
+            Console.WriteLine($"Name: {user.Name}");
+            Console.WriteLine($"Age: {user.Age}");
+            Console.WriteLine($"MessageId: {message.MessageId}");
+            Console.WriteLine($"CorrelationId: {message.CorrelationId}");
+            Console.WriteLine($"SequenceNumber: {message.SystemProperties.SequenceNumber}");
+            Console.WriteLine($"Custom Id: {message.UserProperties["Id"]}");
+            Console.WriteLine($"Custom Name: {message.UserProperties["Name"]}");
+            Console.WriteLine($"Custom Age: {message.UserProperties["Age"]}");
+
             await queueClient.CompleteAsync(message.SystemProperties.LockToken);
         }
 
@@ -60,5 +74,14 @@ namespace QueueMessageReceiver
             Console.WriteLine($"- Executing Action: {context.Action}");
             return Task.CompletedTask;
         }
+    }
+
+    class User
+    {
+        public Guid Id { get; set; }
+
+        public string Name { get; set; }
+
+        public int Age { get; set; }
     }
 }
