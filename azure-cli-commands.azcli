@@ -81,9 +81,18 @@ az eventhubs eventhub create
     --name eventhubname2021 
     --namespace-name eventhubsnamespace2021
 
-# Get Event Hub detailss
+# Get Event Hub details
 az eventhubs eventhub show 
     --namespace-name eventhubsnamespace2021 
     --name eventhubname2021
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------
+
+### EVENT GRID
+
+# Create Event Grid subscription
+az eventgrid event-subscription create 
+    --name queue-subscription 
+    --source-resource-id /subscriptions/20c6eec9-2d80-4700-b0f6-4fde579a8783/resourceGroups/demogrp1/providers/Microsoft.Storage/storageAccounts/demostore4000 
+    --endpoint-type servicebusqueue 
+    --endpoint /subscriptions/20c6eec9-2d80-4700-b0f6-4fde579a8783/resourceGroups/demogrp1/providers/Microsoft.ServiceBus/namespaces/appnamespace4000/queues/appqueue

@@ -19,8 +19,6 @@ namespace DeadLetterQueueMessageReceiver
 
         static async Task QueueFunction()
         {
-
-
             _client = new QueueClient(_bus_connectionstring, EntityNameHelper.FormatDeadLetterPath(_queue_name));
 
             var _options = new MessageHandlerOptions(ExceptionReceived)
