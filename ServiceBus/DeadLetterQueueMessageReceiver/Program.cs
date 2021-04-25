@@ -14,10 +14,10 @@ namespace DeadLetterQueueMessageReceiver
 
         static void Main(string[] args)
         {
-            QueueFunction().GetAwaiter().GetResult();
+            QueueFunction();
         }
 
-        static async Task QueueFunction()
+        static void QueueFunction()
         {
             _client = new QueueClient(_bus_connectionstring, EntityNameHelper.FormatDeadLetterPath(_queue_name));
 
