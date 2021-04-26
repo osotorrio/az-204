@@ -1,0 +1,18 @@
+<policies>
+    <inbound>
+        <base />
+        <set-variable name="CourseId" value="1" />
+        <rewrite-uri template="@{
+        return "/api/Courses/"+ context.Variables.GetValueOrDefault<string>("CourseId"); }" />
+    </inbound>
+    <backend>
+        <base />
+    </backend>
+    <outbound>
+        <base />
+    </outbound>
+    <on-error>
+        <base />
+    </on-error>
+</policies>
+

@@ -1,0 +1,26 @@
+<policies>
+    <inbound>
+        <base />
+        <rewrite-uri template="@{
+        return "/api/Courses"; }" />
+    </inbound>
+    <backend>
+        <base />
+    </backend>
+    <outbound>
+        <base />
+ <choose>
+      <when condition="@(context.Response.StatusCode == 200)">
+        <set-body>
+          @{
+          return "Error";
+           }               
+    </set-body>
+      </when>
+    </choose>
+    </outbound>
+    <on-error>
+        <base />
+    </on-error>
+</policies>
+

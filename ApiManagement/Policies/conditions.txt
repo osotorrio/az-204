@@ -1,0 +1,21 @@
+<policies>
+    <inbound>
+        <base />
+        <set-variable name="Total" value="@(context.Request.Headers["total"][0])" />
+        <choose>
+            <when condition="@(int.Parse(context.Variables.GetValueOrDefault<string>("Total"))<10)">
+                <rewrite-uri template="@{return "/api/Courses";}" />
+            </when>
+            <otherwise />
+        </choose>
+    </inbound>
+    <backend>
+        <base />
+    </backend>
+    <outbound>
+        <base />
+    </outbound>
+    <on-error>
+        <base />
+    </on-error>
+</policies>
