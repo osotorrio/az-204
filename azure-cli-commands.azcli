@@ -1,8 +1,29 @@
 ### CLI
 
+az login
+
 # Set CLI Defaults
 az configure --defaults group=learn-682491ea-0eec-4c67-993c-833f6c429466 location=westus2
 
+#------------------------------------------------------------------------------------------------------------------------------------------------------
+
+### SUBSCRIPTION
+
+az account show -output table
+
+#------------------------------------------------------------------------------------------------------------------------------------------------------
+
+### RESOURCE GROUP
+
+# Create resource group
+az group create \
+  --name {name of your resource group} \
+  --location "{location}"
+
+# LIST RESOURCE GROUPS
+az group list -o table
+
+az deployment group create -n deployment-name-2021 --template-file azuredeploy.json
 #------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ### STORAGE ACCOUNT
