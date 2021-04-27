@@ -7,8 +7,8 @@
                 <rewrite-uri template="@{return "/api/Courses";}" />
             </when>
             <otherwise>
-	<rewrite-uri template="@{return "/Home/Details/1";}" />
-	<set-backend-service base-url="https://demostaging4000.azurewebsites.net"/>
+	            <rewrite-uri template="@{return "/Home/Details/1";}" />
+	            <set-backend-service base-url="https://demostaging4000.azurewebsites.net"/>
             </otherwise>
         </choose>
     </inbound>

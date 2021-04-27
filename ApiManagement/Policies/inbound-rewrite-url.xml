@@ -1,9 +1,7 @@
 <policies>
     <inbound>
         <base />
-        <set-variable name="CourseId" value="1" />
-        <rewrite-uri template="@{
-        return "/api/Courses/"+ context.Variables.GetValueOrDefault<string>("CourseId"); }" />
+        <rewrite-uri template="@{ return "/api/Courses"; }" />
     </inbound>
     <backend>
         <base />
@@ -15,4 +13,3 @@
         <base />
     </on-error>
 </policies>
-

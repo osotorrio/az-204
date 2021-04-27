@@ -1,8 +1,7 @@
 <policies>
     <inbound>
         <base />
-        <rewrite-uri template="@{
-        return "/api/Courses"; }" />
+        <rewrite-uri template="@{ return "/api/Courses"; }" />
     </inbound>
     <backend>
         <base />
@@ -13,7 +12,7 @@
       <when condition="@(context.Response.StatusCode == 200)">
         <set-body>
           @{
-          return "Error";
+                return "Error";
            }               
     </set-body>
       </when>
